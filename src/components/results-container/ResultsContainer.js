@@ -1,6 +1,6 @@
 import React from 'react';
-import './results-container.css';
-import Modal from '../modal/modal';
+import './ResultsContainer.css';
+import Modal from '../modal/Modal';
 
 const POSTER_URL = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/';
 

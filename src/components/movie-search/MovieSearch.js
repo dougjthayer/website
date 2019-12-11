@@ -1,7 +1,7 @@
 import React from 'react';
-import './movie-search.css';
-import Footer from '../footer/footer';
-import SearchBar from '../searchbar/searchbar';
+import './MovieSearch.css';
+import Footer from '../footer/Footer';
+import SearchBar from '../searchbar/SearchBar';
 
 // contains TMDb logo and renders the SearchBar and Footer components
 class MovieSearch extends React.Component {

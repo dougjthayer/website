@@ -1,5 +1,5 @@
 import React from 'react';
-import './navbar.css';
+import './NavBar.css';
 import { NavLink } from 'react-router-dom';
 
 // NavBar containing links to home and TMDb demo components
