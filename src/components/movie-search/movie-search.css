@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#tmdb{
+  position:fixed;  
+  height:50px;
+  width:50px;
+  right: 5px;
+  top: 65px;
+}

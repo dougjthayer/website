@@ -1,0 +1,72 @@
+.modal-hide{
+  display:none;
+  position:fixed;
+  padding-top:100px;
+  top: 0;
+  left: 0;
+  height:100%;
+  width:100%;
+  overflow:auto;  
+}
+
+.modal-show{
+  display:block;
+  position:fixed;
+  padding-top:100px;
+  top: 0;
+  left: 0;
+  height:100%;
+  width:100%;
+  overflow:auto;  
+}
+  
+ .blur{
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+  
+.modal-block{
+  position:relative; 
+  background: black;
+  opacity: 0.90;  
+  margin:auto;
+  padding:0;
+  border:3px solid rgba(255, 255, 255, 0.24);
+  border-radius:15px;
+  width:800px;
+  height:400px;  
+}
+  
+.modal-text{
+  position:relative;  
+  color: white;
+  font-size: 14pt;
+  left:220px;
+  line-height:16pt;
+  max-width:560px;
+}
+  
+.modal-close-button{  
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: block;
+  height: 16px;
+  width: 16px;
+  background: url("https://imgur.com/Xpa25dd.png") no-repeat 50% 50%;
+  border: 0;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.modal-poster{
+  position:absolute;
+  border-radius:5px;
+  left:8px;
+  top:45px;
+  height:297px;
+  width:200px;   
+}

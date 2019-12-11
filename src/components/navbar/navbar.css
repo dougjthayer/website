@@ -1,0 +1,23 @@
+.navbar {
+    position: fixed;    
+    top: 0;
+    width: 100%;    
+    text-align: center;
+    background-color: #080808;         
+}
+
+.link-icon {
+    display: inline-block;
+    margin: 5px 20px;       
+    height: 45px;
+    width: 45px;    
+}
+
+.link-icon:hover {
+    opacity: .5;    
+    cursor: pointer;
+}
+
+.active-link {
+    opacity: .35;   
+}

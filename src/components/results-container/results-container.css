@@ -1,0 +1,29 @@
+.results-show {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+
+.results-hide {
+  display: none;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: stretch;
+  align-items: flex-start;
+}
+
+.results-show .poster {  
+  width: 25%;
+  max-width: 25%;
+  height: auto;
+  padding: .2rem;
+}
+
+.results-show .poster:hover {
+  outline: 1px solid white;
+  cursor: pointer;
+}
