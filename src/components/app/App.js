@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import Home from '../home/home';
-import MovieSearch from '../movie-search/movie-search';
+import Home from '../home/Home';
+import MovieSearch from '../movie-search/MovieSearch';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import NavBar from '../navbar/navbar';
+import NavBar from '../navbar/NavBar';
+import EmployeeMap from '../employee-map/EmployeeMap';
 
 // returns a div telling the user that the page they tried to navigate to does not exist
 const NotFound = () => {
@@ -19,9 +20,10 @@ class App extends React.Component {
     return (
       <div>
         <BrowserRouter>
-          <NavBar />         
+          <NavBar />                   
           <Switch>
-            <Route component={MovieSearch} path="/tmdb-demo" />     
+            <Route component={MovieSearch} path="/tmdb-demo" />
+            <Route component={EmployeeMap} path="/employee-map" />     
             <Route component={Home} exact path="/" />
             <Route component={NotFound} />                 
           </Switch>

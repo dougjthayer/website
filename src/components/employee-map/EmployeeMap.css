@@ -1,0 +1,17 @@
+.map {
+    display: block;
+    padding-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.svgShape {
+    outline: white solid 2px;
+    fill: rgb(64,64,64);    
+}
+
+.svgShape:hover {
+    opacity: 50%;
+    cursor: pointer;
+}

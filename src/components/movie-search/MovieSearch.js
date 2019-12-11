@@ -1,7 +1,7 @@
 import React from 'react';
 import './MovieSearch.css';
-import Footer from '../footer/Footer';
-import SearchBar from '../searchbar/SearchBar';
+import Footer from './footer/Footer';
+import SearchBar from './searchbar/SearchBar';
 
 // contains TMDb logo and renders the SearchBar and Footer components
 class MovieSearch extends React.Component {
@@ -17,8 +17,7 @@ class MovieSearch extends React.Component {
           </a>
           <SearchBar />     
           <Footer />
-        </div>
-           
+        </div>           
     );
   }
 }
