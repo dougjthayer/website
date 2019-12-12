@@ -62,8 +62,7 @@ class Employee extends React.Component {
             id: '',
             name: '',
             workStations: '',
-            prevWorkLocation: '',
-            
+            prevWorkLocation: ''
         }
     }
 }

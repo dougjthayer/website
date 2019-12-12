@@ -1,10 +1,9 @@
-@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 * {
   box-sizing: border-box;
 }
 
-body {
-  background-color: black;
+.body {
+  background-color: #272D34;
 }
 
 .container {

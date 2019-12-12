@@ -10,7 +10,8 @@
     "react-promise-tracker": "^2.0.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "react-spinners": "^0.6.1"
+    "react-spinners": "^0.6.1",
+    "react-xml": "^0.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
