@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import Home from '../home/Home';
-import MovieSearch from '../movie-search/MovieSearch';
+import Home from '../Home/Home';
+import MovieSearch from '../MovieSearch/MovieSearch';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import NavBar from '../navbar/NavBar';
-import EmployeeMap from '../employee-map/EmployeeMap';
+import NavBar from '../NavBar/NavBar';
+import EmployeeMap from '../EmployeeMap/EmployeeMap';
 
 // returns a div telling the user that the page they tried to navigate to does not exist
 const NotFound = () => {

@@ -16,7 +16,8 @@ class NavBar extends React.Component {
                         version="1.1" 
                         viewBox="0 0 24 24" 
                         xmlns="http://www.w3.org/2000/svg" 
-                        xmlnsXlink="http://www.w3.org/1999/xlink">
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        className="navbar-svg">
                             <g 
                                 stroke-linecap="round" 
                                 stroke-width="1.5" 
@@ -64,7 +65,8 @@ class NavBar extends React.Component {
                         version="1.1" 
                         viewBox="0 0 24 24" 
                         xmlns="http://www.w3.org/2000/svg" 
-                        xmlnsXlink="http://www.w3.org/1999/xlink">
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        className="navbar-svg">
                             <g 
                                 stroke-linecap="round" 
                                 stroke-width="1.5" 

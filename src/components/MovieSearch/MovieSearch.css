@@ -19,3 +19,11 @@ body {
   right: 5px;
   top: 65px;
 }
+
+.footer{
+  position:fixed;
+  bottom:1px;
+  left:5px;
+  font-size:10pt;
+  color:white;
+}

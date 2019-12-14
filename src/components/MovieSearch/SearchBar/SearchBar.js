@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import './SearchBar.css';
-import ResultsContainer from '../results-container/ResultsContainer';
+import ResultsContainer from '../ResultsContainer/ResultsContainer';
 import { trackPromise } from 'react-promise-tracker';
-import LoadingIndicator from '../../tools/LoadingIndicator';
+import LoadingIndicator from '../../Tools/LoadingIndicator';
 
 const API_KEY = 'd95e0715a998b10f00c3768041d74ac0'
 const API_URL = 'https://api.themoviedb.org/3/search/movie?include_adult=false&page=1'

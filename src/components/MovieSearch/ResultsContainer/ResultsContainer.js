@@ -1,6 +1,6 @@
 import React from 'react';
 import './ResultsContainer.css';
-import Modal from '../modal/Modal';
+import Modal from '../Modal/Modal';
 
 const POSTER_URL = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/';
 
@@ -67,9 +67,9 @@ class ResultsContainer extends React.Component {
                   onClick={(e) => this.clickPoster(item.id, e)}                  
                 />
               )
-            })
+              })
           }
-        }
+        
         <Modal info = {this.state.results} toggle = {this.state.modalShow} id = {this.state.clickedPosterID} />       
         </div>
       </div>
