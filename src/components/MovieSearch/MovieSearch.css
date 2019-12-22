@@ -47,7 +47,7 @@ body {
   background: transparent;
   min-height: 36px;
   border: 0;
-  outline: none;  
+  outline: none;   
 }
   
 .search-input::placeholder {
@@ -77,7 +77,7 @@ body {
 
 .result-block {  
   display: flex;
-  flex-flow: wrap;
+  flex-flow: column wrap;
   margin-bottom: 5%;
   margin-right: 4%;  
   width: 22%;  
@@ -122,8 +122,12 @@ body {
   order: 2;
 }
 
-.result-year-genre {
+.result-year-genre {  
+  font-family: "Work Sans", sans-serif;
+  font-size: 17px;
+  line-height: 20px;
   color: rgba(230,225,222,0.56);
+  order: 3;
 }
 
 .results-showing {

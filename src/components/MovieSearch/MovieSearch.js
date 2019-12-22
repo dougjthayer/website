@@ -17,13 +17,28 @@ class MovieSearch extends React.Component {
       results: [],
       query: '',
       clickedPosterID: '',
-      modalShow: false
+      modalShow: false,
+      genres: []
     }
     
     this.setResults = this.setResults.bind(this);
     this.setQuery = this.setQuery.bind(this);
     this.setPosterID = this.setPosterID.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.getGenres = this.getGenres.bind(this);
+  }
+
+  componentDidMount(){
+      this.getGenres()
+  }
+
+  getGenres = () => {
+    axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=d95e0715a998b10f00c3768041d74ac0&language=en-US')
+      .then(({data}) => {        
+        this.setState({
+          genres: data.genres
+        })
+      })
   }
 
   setResults(newResults){
@@ -67,7 +82,7 @@ class MovieSearch extends React.Component {
           </a>
           <SearchBar results={this.state.results} query={this.state.query} setResults={this.setResults} setQuery={this.setQuery}/>
           <LoadingIndicator />
-          <ResultsContainer results={this.state.results} query={this.state.query} setPosterID={this.setPosterID} toggleModal={this.toggleModal} />
+          <ResultsContainer results={this.state.results} query={this.state.query} setPosterID={this.setPosterID} toggleModal={this.toggleModal} genres={this.state.genres}/>
           <Modal modalShow={this.state.modalShow} clickedPosterID = {this.state.clickedPosterID} results={this.state.results} toggleModal={this.toggleModal} />     
           <footer className="footer">           
             This product uses the TMDb API but is not endorsed or certified by TMDb.
@@ -100,7 +115,7 @@ class SearchBar extends React.Component {
   // sets state to user query
   // if query is 2 or more characters, executes getData function
   changeInput = async () => {       
-    await this.props.setQuery(this.search.value);              
+    await this.props.setQuery(this.search.value);
     if (this.props.query && this.props.query.length > 1){                                                                                                        
         this.trackDataPromise()                          
       } 
@@ -136,8 +151,7 @@ class SearchBar extends React.Component {
       <div className="container">           
         <div className="search">
           <input 
-            type="text" 
-            name="search"             
+            type="text"           
             className="search-input" 
             placeholder="Search movie by title..."
             ref={input => this.search = input} 
@@ -156,13 +170,27 @@ class ResultsContainer extends React.Component {
   constructor(props){
     super(props);
     
-    this.clickPoster = this.clickPoster.bind(this);          
+    this.clickPoster = this.clickPoster.bind(this);
+    this.findGenresByID = this.findGenresByID.bind(this);          
   }
 
   // when user clicks on a poster, modal toggle is set to true and result id is captured
   clickPoster = async (id) => {    
     await this.props.setPosterID(id);
     this.props.toggleModal();
+  }
+
+  findGenresByID = (id) => {
+      var foundGenres = '';            
+      for(let i=0;i<this.props.results.length;i++){
+        if(this.props.results[i].id === id){
+          for(let j=0;j<this.props.genres.length;j++)
+            for(let k=0;k<this.props.results[i].genre_ids.length;k++)
+              if(this.props.results[i].genre_ids[k] === this.props.genres[j].id)
+                foundGenres+= this.props.genres[j].name + ', ';
+        }      
+      }
+      return foundGenres;
   }
 
   // renders nothing if no results are stored in state
@@ -179,7 +207,9 @@ class ResultsContainer extends React.Component {
         <div className={this.props.query.length < 2 ? "results-hide" : "results-show"}>          
           {this.props.results.map(item => {
               let path = POSTER_URL + item.poster_path;
-              let year = item.release_date.slice(0,4);             
+              let year = item.release_date.slice(0,4);
+              let foundGenres = this.findGenresByID(item.id);            
+              foundGenres = foundGenres.substring(0,foundGenres.length-2);                         
                 return (
                   <div className="result-block">                                              
                     <img 
@@ -190,7 +220,8 @@ class ResultsContainer extends React.Component {
                       alt=""
                       onClick={(e) => this.clickPoster(item.id, e)}                   
                     />
-                    <span className="result-title">{item.title} <span className="result-year-genre">({year})</span></span>                    
+                    <span className="result-title">{item.title} <span className="result-year-genre">({year})</span></span>
+                    <span className="result-year-genre">{foundGenres}</span>                    
                   </div>                                    
                 )              
               })
