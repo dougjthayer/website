@@ -42,12 +42,16 @@ class ResultsContainer extends React.Component {
   render() {
     if (this.state.results === null) return null;
     return (
-      <div className="container">               
-        <div className={this.props.query.length < 2 ? "results-hide" : "results-show"}>
+      <div className="container">
+        <div className={this.props.query.length > 0 ? "results-text-show" : "results-text-hide"}>
+            Showing <span>X of Y</span> results
+          </div>               
+        <div className={this.props.query.length < 2 ? "results-hide" : "results-show"}>          
           {this.state.results.map(item => {
               let path = POSTER_URL + item.poster_path;          
               if(item.poster_path === null) 
-                return (            
+                return (
+                  <div>            
                   <img 
                     key={item.id} 
                     src='https://s3.ca-central-1.amazonaws.com/dougjthayer.com-images/noposter.png'
@@ -56,6 +60,8 @@ class ResultsContainer extends React.Component {
                     alt=""
                     onClick={(e) => this.clickPoster(item.id, e)}                   
                   />
+                  {item.title}, {item.release_date}
+                  </div>
                 )
               return (            
                 <img 

@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   align-content: stretch;
-  align-items: flex-start;
+  align-items: flex-start;  
 }
 
 .results-hide {
@@ -26,4 +26,19 @@
 .results-show .poster:hover {
   outline: 1px solid white;
   cursor: pointer;
+}
+
+.results-text-show {
+  color: #E6E1DE;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 21px;
+  line-height: 25px;
+}
+
+.results-text-hide {
+  color: #272D34;
+}
+
+span {
+  font-weight: bold;
 }

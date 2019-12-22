@@ -8,7 +8,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 80%;
   margin: 0 auto;
 }
 
@@ -26,4 +26,172 @@ body {
   left:5px;
   font-size:10pt;
   color:white;
+}
+
+/* SearchBar */
+.search {
+  display: flex;
+  flex-flow: row;
+  width: 1600px;
+  margin-top: 65px;
+  margin-bottom: 50px;  
+  font-family: 'Work Sans', sans-serif;
+  border-bottom: 1px solid rgba(230,225,222,0.24);    
+}
+  
+.search-input {
+  font-family: 'Work Sans', sans-serif;  
+  font-size: 40px;
+  padding-bottom: .5rem;
+  color: #E6E1DE;
+  background: transparent;
+  min-height: 36px;
+  border: 0;
+  outline: none;  
+}
+  
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.24);
+  font-family: 'Work Sans', sans-serif;
+}
+
+.search-clear {
+  margin-left: 70%;
+  color: #E6E1DE;
+  font-size: 40px;
+  font-family: "Work Sans", sans-serif;
+  cursor: pointer;
+}
+
+/* ResultsContainer */
+.results-show {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  width: 1600px;    
+}
+
+.results-hide {
+  display: none;  
+}
+
+.result-block {  
+  display: flex;
+  flex-flow: wrap;
+  margin-bottom: 5%;
+  margin-right: 4%;  
+  width: 22%;  
+}
+
+.result-block:nth-of-type(4n+0){
+  margin-right: 0%;
+}
+
+.result-block:nth-child(-n+4){
+  margin-top: 2%;
+}
+
+.poster {  
+  max-width: 100%;
+  height: auto;
+  order: 1;
+}
+
+.poster:hover {
+  outline: 1px solid white;
+  cursor: pointer;
+}
+
+.results-text-show {
+  color: #E6E1DE;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 21px;
+  line-height: 25px;
+}
+
+.results-text-hide {
+  color: #272D34;
+}
+
+.result-title {
+  color: #E6E1DE;
+  font-family: "Work Sans", sans-serif;
+  font-size: 21px;
+  line-height: 25px;
+  margin-top: 5%;
+  order: 2;
+}
+
+.result-year-genre {
+  color: rgba(230,225,222,0.56);
+}
+
+.results-showing {
+  font-weight: bold;
+}
+
+/* Modal */
+.modal-hide{
+  display:none;
+  position:fixed;
+  padding-top:100px;
+  top: 0;
+  left: 0;
+  height:100%;
+  width:100%;
+  overflow:auto;  
+}
+
+.modal-show{
+  display:block;
+  position:fixed;
+  padding-top:100px;
+  top: 0;
+  left: 0;
+  height:100%;
+  width:100%;
+  overflow:auto;  
+}
+  
+.modal-block{
+  position:relative; 
+  background: black;
+  opacity: 0.90;  
+  margin:auto;
+  padding:0;
+  border:3px solid rgba(255, 255, 255, 0.24);
+  border-radius:15px;
+  width:800px;
+  height:400px;  
+}
+  
+.modal-text{
+  position:relative;  
+  color: white;
+  font-size: 14pt;
+  left:220px;
+  line-height:16pt;
+  max-width:560px;
+}
+  
+.modal-close-button{  
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: block;
+  height: 16px;
+  width: 16px;
+  background: url("https://imgur.com/Xpa25dd.png") no-repeat 50% 50%;
+  border: 0;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.modal-poster{
+  position:absolute;
+  border-radius:5px;
+  left:8px;
+  top:45px;
+  height:297px;
+  width:200px;   
 }

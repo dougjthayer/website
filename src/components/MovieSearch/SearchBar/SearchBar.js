@@ -8,6 +8,8 @@ import LoadingIndicator from '../../Tools/LoadingIndicator';
 const API_KEY = 'd95e0715a998b10f00c3768041d74ac0'
 const API_URL = 'https://api.themoviedb.org/3/search/movie?include_adult=false&page=1'
 
+const POSTER_URL = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/';
+
 // state contains query and results array
 class SearchBar extends React.Component {
   constructor(props){
