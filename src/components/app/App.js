@@ -19,6 +19,7 @@ class App extends React.Component {
   render(){
     return (
       <div>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <BrowserRouter>
           <NavBar />                   
           <Switch>

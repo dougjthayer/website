@@ -71,7 +71,8 @@ class SearchBar extends React.Component {
   // passing results and user query to ResultsContainer
   render(){
     return (
-      <div className="container">           
+      <div className="container">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />           
         <div id="search" className="search">
           <input 
           type="text" 

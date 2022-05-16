@@ -16,8 +16,8 @@ body {
   position:fixed;  
   height:50px;
   width:50px;
-  right: 5px;
-  top: 65px;
+  right:5px;
+  top:65px;
 }
 
 .footer{
@@ -28,26 +28,37 @@ body {
   color:white;
 }
 
+.page-bottom-boundary {
+  height:100px;
+  margin:30px;
+}
+
+/**************/
 /* SearchBar */
+/************/
 .search {
   display: flex;
-  flex-flow: row;
-  width: 1600px;
+  flex-flow: column;
+  width: 100%;
   margin-top: 65px;
-  margin-bottom: 50px;  
+  margin-bottom: 50px;
   font-family: 'Work Sans', sans-serif;
   border-bottom: 1px solid rgba(230,225,222,0.24);    
 }
   
 .search-input {
   font-family: 'Work Sans', sans-serif;  
-  font-size: 40px;
   padding-bottom: .5rem;
   color: #E6E1DE;
   background: transparent;
   min-height: 36px;
   border: 0;
-  outline: none;   
+  outline: none;
+}
+
+#search-input-underline {
+  border-top: 2px solid rgba(247,181,0,1);
+  width:0;
 }
   
 .search-input::placeholder {
@@ -55,20 +66,14 @@ body {
   font-family: 'Work Sans', sans-serif;
 }
 
-.search-clear {
-  margin-left: 70%;
-  color: #E6E1DE;
-  font-size: 40px;
-  font-family: "Work Sans", sans-serif;
-  cursor: pointer;
-}
-
 /* ResultsContainer */
+/*                  */
+/*                  */
 .results-show {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  width: 1600px;    
+  width: 100%;    
 }
 
 .results-hide {
@@ -130,11 +135,14 @@ body {
   order: 3;
 }
 
-.results-showing {
+.results-text-show .results-showing {
   font-weight: bold;
+  color: rgba(247,181,0,1);
 }
 
 /* Modal */
+/*       */
+/*       */
 .modal-hide{
   display:none;
   position:fixed;
@@ -198,4 +206,82 @@ body {
   top:45px;
   height:297px;
   width:200px;   
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .footer{
+    font-size:8px;
+  }
+
+  .search {
+    width:80%;
+    left:5%;
+  }
+
+  .search-input {
+    font-size:18px;
+  }
+
+  .result-block {
+    width:100%;
+  }
+
+  #tmdb {
+    width:25px;
+    height:25px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .footer{
+    font-size:10px;
+  }
+
+  .search {
+    width:80%;
+    left:5%;
+  }
+
+  #tmdb {
+    width:25px;
+    height:25px;
+  }
+
+  .search-input {
+    font-size:24px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .footer{
+    font-size:14px;
+  }
+
+  .search-input {
+    font-size:30px;
+  }
+
+  #tmdb {
+    width:50px;
+    height:50px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .footer{
+    font-size:14px;
+  }
+
+  .search-input {
+    font-size:36px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  
 }

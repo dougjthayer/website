@@ -44,7 +44,7 @@ class ResultsContainer extends React.Component {
     return (
       <div className="container">
         <div className={this.props.query.length > 0 ? "results-text-show" : "results-text-hide"}>
-            Showing <span>X of Y</span> results
+            Showing <span>{this.state.results.length}</span> results
           </div>               
         <div className={this.props.query.length < 2 ? "results-hide" : "results-show"}>          
           {this.state.results.map(item => {

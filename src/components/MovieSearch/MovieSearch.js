@@ -5,7 +5,7 @@ import { trackPromise } from 'react-promise-tracker';
 import LoadingIndicator from '../Tools/LoadingIndicator';
 
 const API_KEY = 'd95e0715a998b10f00c3768041d74ac0'
-const API_URL = 'https://api.themoviedb.org/3/search/movie?include_adult=false&page=1'
+const API_URL = 'https://api.themoviedb.org/3/search/movie?include_adult=false&page='
 
 const POSTER_URL = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2/';
 
@@ -18,7 +18,11 @@ class MovieSearch extends React.Component {
       query: '',
       clickedPosterID: '',
       modalShow: false,
-      genres: []
+      genres: [],
+      totalResults: 0,
+      currentPage: 0,
+      loading: false,
+      prevY: 0
     }
     
     this.setResults = this.setResults.bind(this);
@@ -26,6 +30,12 @@ class MovieSearch extends React.Component {
     this.setPosterID = this.setPosterID.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.getGenres = this.getGenres.bind(this);
+    this.setLoading = this.setLoading.bind(this);
+    this.trackDataPromise = this.trackDataPromise.bind(this);
+    this.getData = this.getData.bind(this);
+    this.setPage = this.setPage.bind(this);
+    this.setPrevY = this.setPrevY.bind(this);
+    this.clearResults = this.clearResults.bind(this);
   }
 
   componentDidMount(){
@@ -41,10 +51,27 @@ class MovieSearch extends React.Component {
       })
   }
 
-  setResults(newResults){
+  setResults(newResults, dataTotalPages, dataTotalResults){
+    if(this.state.results !== []){
+      this.setState(previousState => ({
+        results: [...previousState.results, ...newResults],
+        totalResults: dataTotalResults,
+        totalPages: dataTotalPages
+      }))
+    } else {
+      this.setState({
+        results: newResults,
+        totalResults: dataTotalResults,
+        totalPages: dataTotalPages
+      })
+    }
+  }
+
+  //Possibly not needed
+  clearResults = () =>{
     this.setState({
-      results: newResults
-    })    
+      results: []
+    })
   }
 
   setQuery(newQuery){    
@@ -59,6 +86,19 @@ class MovieSearch extends React.Component {
     })
   }
 
+  setLoading(status){
+    if(status === "true")
+      this.setState({ loading: true});
+    else
+      this.setState({ loading: false});
+  }
+
+  setPage(page){
+    this.setState({
+      currentPage: page
+    })
+  }
+
   toggleModal(){
     if(this.state.modalShow === false)
       this.setState({
@@ -69,10 +109,43 @@ class MovieSearch extends React.Component {
         modalShow: false
       })
   }
+
+  // getData wrapped in promise tracker for loading indicator and to prevent input lag
+  trackDataPromise = () => {
+    trackPromise(
+      this.getData()
+    )
+  }
+
+  setPrevY(newY){
+    this.setState({
+      prevY: newY
+    })
+  }
+
+  // promise function with a 1 second delay
+  // sends user query to API and stores results in state
+  getData = () => {
+    if(this.state.currentPage === 0) this.setState({ currentPage: 1});
+    this.setState({ loading: true});
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(
+          axios.get(`${API_URL}${this.state.currentPage}&query=${this.state.query}&language=en-US&api_key=${API_KEY}`)         
+          .then(({ data }) => {                     
+            this.setResults(data.results,data.total_pages,data.total_results);
+            this.setState({ loading: false });
+          })
+        )
+      }, 1000)         
+    })    
+    return promise;
+  }
   
   render(){
     return (         
-        <div className="movieSearch">                            
+        <div className="movieSearch">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />                            
           <title>TMDb API Test</title>        
           <a href="https://www.themoviedb.org/">
             <img 
@@ -80,25 +153,27 @@ class MovieSearch extends React.Component {
             id="tmdb" 
             alt="" />
           </a>
-          <SearchBar results={this.state.results} query={this.state.query} setResults={this.setResults} setQuery={this.setQuery}/>
+          <SearchBar results={this.state.results} query={this.state.query} setResults={this.setResults} setQuery={this.setQuery} trackDataPromise={this.trackDataPromise} getData={this.getData} clearResults={this.clearResults} setPage={this.setPage}/>
           <LoadingIndicator />
-          <ResultsContainer results={this.state.results} query={this.state.query} setPosterID={this.setPosterID} toggleModal={this.toggleModal} genres={this.state.genres}/>
+          <ResultsContainer results={this.state.results} query={this.state.query} setPosterID={this.setPosterID} toggleModal={this.toggleModal} genres={this.state.genres} currentPage={this.state.currentPage} totalResults={this.state.totalResults} getData={this.getData} setPage={this.setPage} prevY={this.prevY} setPrevY={this.setPrevY}/>
           <Modal modalShow={this.state.modalShow} clickedPosterID = {this.state.clickedPosterID} results={this.state.results} toggleModal={this.toggleModal} />     
           <footer className="footer">           
             This product uses the TMDb API but is not endorsed or certified by TMDb.
-          </footer>
+          </footer>        
         </div>           
     );
   }
 }
 
+//////////////////////////
+// SearchBar component //
+////////////////////////
 class SearchBar extends React.Component {
   constructor(props){
     super(props);    
 
-    this.getData = this.getData.bind(this);
     this.changeInput = this.changeInput.bind(this);
-    this.trackDataPromise = this.trackDataPromise.bind(this);
+    this.getTextWidth = this.getTextWidth.bind(this);
   }
 
   // focuses on search bar on component mount
@@ -112,37 +187,28 @@ class SearchBar extends React.Component {
       this.search.value = '';
   }
 
+  getTextWidth = (text, font) => {
+    var canvas = document.createElement("canvas");
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+  }
+
   // sets state to user query
   // if query is 2 or more characters, executes getData function
   changeInput = async () => {       
     await this.props.setQuery(this.search.value);
-    if (this.props.query && this.props.query.length > 1){                                                                                                        
-        this.trackDataPromise()                          
-      } 
+    if (this.props.query && this.props.query.length > 1){ 
+        this.props.trackDataPromise();                         
+    }
+    if (this.props.query.length < 2){
+      this.props.setPage(0);
+      this.props.clearResults();
+    }
+      var font = window.getComputedStyle(document.getElementById("search-input")).font;
+      document.getElementById("search-input-underline").style.width = this.getTextWidth(this.props.query,font + 'pt Work Sans') + "px";
     }  
-  
-  // getData wrapped in promise tracker for loading indicator and to prevent input lag
-  trackDataPromise = () => {
-    trackPromise(
-      this.getData()
-    )
-  }
-
-  // promise function with a 1 second delay
-  // sends user query to API and stores results in state
-  getData = () => {
-    const promise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(
-          axios.get(`${API_URL}&query=${this.props.query}&language=en-US&api_key=${API_KEY}`)         
-          .then(({ data }) => {                     
-            this.props.setResults(data.results)
-          })
-        )
-      }, 1000)         
-    })    
-    return promise;
-  }  
 
   // renders input field, LoadingIndicator component and ResultsContainer component
   // passing results and user query to ResultsContainer
@@ -151,27 +217,57 @@ class SearchBar extends React.Component {
       <div className="container">           
         <div className="search">
           <input 
-            type="text"           
+            type="text"
+            id="search-input"           
             className="search-input" 
             placeholder="Search movie by title..."
             ref={input => this.search = input} 
             onChange={this.changeInput} 
           />
-          <div 
-            className="search-clear"
-            onClick={(e) => this.clearInput(e)}>x</div>       
-        </div>         
+          <div id="search-input-underline"/>
+        </div>        
       </div>
     );
   }
 }
 
+/////////////////////////////////
+// ResultsContainer component //
+///////////////////////////////
 class ResultsContainer extends React.Component {  
   constructor(props){
     super(props);
     
     this.clickPoster = this.clickPoster.bind(this);
-    this.findGenresByID = this.findGenresByID.bind(this);          
+    this.findGenresByID = this.findGenresByID.bind(this);
+    this.displayedResults = this.displayedResults.bind(this);          
+  }
+
+  componentDidMount(){
+    var options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0
+    }
+
+    this.observer = new IntersectionObserver(
+      this.handleObserver.bind(this),
+      options
+    );
+    this.observer.observe(this.loadingRef);
+  }
+
+  componentWillUnmount(){
+    this.observer.unobserve(this.loadingRef);
+  }
+
+  handleObserver(entities, observer) {
+    const y = entities[0].boundingClientRect.y;
+    if (entities[0].intersectionRatio === 1 && this.props.currentPage !== 0){
+      this.props.setPage(this.props.currentPage + 1);
+      this.props.getData();
+    }
+    this.props.setPrevY(y);
   }
 
   // when user clicks on a poster, modal toggle is set to true and result id is captured
@@ -193,16 +289,23 @@ class ResultsContainer extends React.Component {
       return foundGenres;
   }
 
+  displayedResults = () => {
+    if (this.props.currentPage * 20 > this.props.totalResults)
+      return this.props.totalResults;
+    else
+      return this.props.currentPage * 20;
+  }
+
   // renders nothing if no results are stored in state
   // displays all posters for movies from results array if available
   // otherwise displays a 'No Poster Found' image
   // passes current state, clicked poster id and modal toggle to Modal component
-  render() {        
+  render() {
     if (this.props.results === null) return null;
     return (      
       <div className="container">
         <div className={this.props.query.length >= 2 ? "results-text-show" : "results-text-hide"}>
-          Showing <span className="results-showing">X of Y</span> results
+          <span className="results-showing">{this.displayedResults()}</span> of <span className="results-showing">{this.props.totalResults}</span> results showing
         </div>               
         <div className={this.props.query.length < 2 ? "results-hide" : "results-show"}>          
           {this.props.results.map(item => {
@@ -226,13 +329,16 @@ class ResultsContainer extends React.Component {
                 )              
               })
           }        
-              
         </div>
+        <div className="page-bottom-boundary" ref={loadingRef => (this.loadingRef = loadingRef)}/>
       </div>
     );
   }
 }
 
+//////////////////////
+// Modal component //
+////////////////////
 class Modal extends React.Component {
   constructor(props){
     super(props);
